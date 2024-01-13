@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Kino.Presentation.WebApi.Controllers
+namespace Kino.Presentation.WebApi.ViewModels.UserViewModles
 {
     public class RegisterViewModel
     {
@@ -13,7 +13,7 @@ namespace Kino.Presentation.WebApi.Controllers
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Compare(nameof(RegisterViewModel.Password), ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 }

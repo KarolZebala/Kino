@@ -1,4 +1,4 @@
-﻿namespace Kino.Presentation.WebApi.Controllers
+﻿namespace Kino.Presentation.WebApi.ViewModels.UserViewModles
 {
     public class LoginViewModel
     {

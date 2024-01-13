@@ -1,6 +1,6 @@
 using Kino.Infrastructure;
 using Kino.Presentation.WebApi;
-using Kino.Presentation.WebApi.Controllers;
+using Kino.Presentation.WebApi.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -56,7 +56,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero // Allow for a small clock skew when validating the lifetime
         };
     });
-builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddScoped<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -5,16 +5,16 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Kino.Presentation.WebApi.Controllers
+namespace Kino.Presentation.WebApi.Helpers
 {
-    public interface IJwtTokenGenerator 
+    public interface IJwtTokenGeneratorService
     {
         string GenerateJwtToken(IdentityUser user);
     }
-    public class JwtTokenGenerator : IJwtTokenGenerator
+    public class JwtTokenGeneratorService : IJwtTokenGeneratorService
     {
         private readonly string _secret;
-        public JwtTokenGenerator(IOptionsSnapshot<SecretOptions> options)
+        public JwtTokenGeneratorService(IOptionsSnapshot<SecretOptions> options)
         {
             _secret = options.Value.MySecret;
         }
@@ -22,15 +22,17 @@ namespace Kino.Presentation.WebApi.Controllers
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var claims = new ClaimsIdentity(new[]
             {
-                Subject = new ClaimsIdentity(new[]
-                {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName),
-            }),
+            });
+            var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = claims,
                 Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = credentials
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
