@@ -21,7 +21,7 @@ namespace Kino.Domain.Movie
         public long MovieId { get; protected set; }
         public string MovieTitle { get; protected set; }
         public  string Descripition { get; protected set; }
-        public Director Director { get; protected set; }
+        public Director.Director Director { get; protected set; }
         public IReadOnlyCollection<MovieReview> Reviews 
         { 
             get => _reviews;
@@ -42,12 +42,19 @@ namespace Kino.Domain.Movie
             protected set => _movieComments = new HashSet<MovieComment>(value);
         }
         protected HashSet<MovieComment> _movieComments;
+        public IReadOnlyCollection<Actor.Actor> Actors
+        {
+            get => _actors;
+            protected set => _actors = new HashSet<Actor.Actor>(value);
+        }
+        protected HashSet<Actor.Actor> _actors;
 
         private Movie()
         {
             _reviews = new HashSet<MovieReview>();
             _movieVersions = new HashSet<MovieVersion>();
             _movieComments = new HashSet<MovieComment>();
+            _actors = new HashSet<Actor.Actor>(); 
         }
         private Movie(
             string movieTitle,
@@ -94,7 +101,7 @@ namespace Kino.Domain.Movie
         #endregion
 
         #region Director
-        public void AddDirector(Director director)
+        public void AddDirector(Director.Director director)
         {
             Director = director;
         }
@@ -150,137 +157,44 @@ namespace Kino.Domain.Movie
             _movieVersions.Remove(version);
         }
         #endregion
-    }
-    public class Director
-    {
-        public static Director CreateNew(
-            string directorName,
-            string directorSurname
-        )
-        {
-            return new Director(directorName, directorSurname);
-        }
-        public long DirectorId { get; protected set; }
-        public string DirectorName { get; protected set; }
-        public string DirectorSurname { get; protected set; }
-        private Director() { }
-        private Director(
-            string directorName,
-            string directorSurname
-        )
-        {
-            DirectorName = directorName;
-            DirectorSurname = directorSurname;
-        }
-    }
-    public class MovieVersion 
-    {
-        public static MovieVersion CreateNew(int duration,
-            string soundVersion,
-            string imageVersion,
-            string languageVerion,
-            bool hasSubstitles
-        )
-        {
-            return new MovieVersion(
-                duration: duration,
-                soundVersion: soundVersion,
-                imageVersion: imageVersion,
-                languageVerion: languageVerion,
-                hasSubstitles: hasSubstitles
-            );
-        }
 
+        #region Movie Commnets
+        public void AddComment(string author, string content) 
+        {
+            var comment = MovieComment.CreateNew(author, content);
+            _movieComments.Add(comment);
+        }
+        public void UpdateComment(long movieCommentId, string author, string content)
+        {
+            var comment = _movieComments.FirstOrDefault(x => x.MovieCommentId == movieCommentId);
+            if(comment is null)
+            {
+                throw new ArgumentException("Not found comment");
+            }
+            comment.ChangeMainAttributes(author, content);
+        }
+        public void RemoveComment(long movieCommentId)
+        {
+            var comment = _movieComments.FirstOrDefault(x => x.MovieCommentId == movieCommentId);
+            if (comment is null)
+            {
+                return;
+            }
+            _movieComments.Remove(comment);
+        }
+        #endregion
 
-        public long MovieVersionId { get; protected set; }
-        public int Duration { get; protected set; }
-        public string SoundVersion { get; protected set; }
-        public string ImageVersion { get; protected set; }
-        public string LanguageVerion { get; protected set; }
-        public bool HasSubstitles { get; protected set; }
-        private MovieVersion()
+        #region Actors
+        public void AddActor(Actor.Actor actor) 
         {
+            _actors.Add(actor);
+        }
+        public void RemoveActor(Actor.Actor actor)
+        {
+            _actors.Remove(actor);
+        }
+        #endregion
 
-        }
-        private MovieVersion(
-            int duration,
-            string soundVersion,
-            string imageVersion,
-            string languageVerion,
-            bool hasSubstitles
-        )
-        {
-            Duration = duration;
-            SoundVersion = soundVersion;
-            ImageVersion = imageVersion;
-            LanguageVerion = languageVerion;
-            HasSubstitles = hasSubstitles;
-        }
-
-        public void ChangeMainAttributes(
-            int duration,
-            string soundVersion,
-            string imageVersion,
-            string languageVerion,
-            bool hasSubstitles
-        )
-        {
-            Duration = duration;
-            SoundVersion = soundVersion;
-            ImageVersion = imageVersion;
-            LanguageVerion = languageVerion;
-            HasSubstitles = hasSubstitles;
-        }
-    }
-    public class MovieReview
-    {
-        public static MovieReview CreateNew(string author,
-            string type,
-            string content
-        )
-        {
-            return new MovieReview(author, type, content);
-        }
-
-        public long MovieReviewId { get; protected set; }
-        public string Author { get; protected set; }
-        public string Type { get; protected set; }
-        public string Content { get; protected set; }
-        private MovieReview() { }
-        private MovieReview(
-            string author,
-            string type,
-            string content
-        )
-        {
-            Author = author;
-            Type = type;
-            Content = content;
-        }
-        public void ChangeMainAttributes(string content)
-        {
-            Content = content.Trim();
-        }
-    }
-    public class MovieComment
-    {
-        public static MovieComment CreateNew(string author, string content) 
-        {
-            return new MovieComment(author, content);
-        }
-
-        public long MovieCommentId { get; protected set; }
-        public string Author { get; protected set; }
-        public string Content { get; protected set; }
-        private MovieComment()
-        {
-
-        }
-        private MovieComment(string author, string content)
-        {
-            Author = author;
-            Content = content;
-        }
     }
 
 }

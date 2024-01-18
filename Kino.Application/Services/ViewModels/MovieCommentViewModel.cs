@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Kino.Application.Services.ViewModels
+{
+    public class MovieCommentViewModel
+    {
+        public long MovieCommentId { get; set; }
+        public string Author { get; set; }
+        public string Content { get; set; }
+    }
+}

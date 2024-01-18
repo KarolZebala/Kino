@@ -4,6 +4,7 @@ using Kino.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kino.Infrastructure.Migrations
 {
     [DbContext(typeof(KinoDbContext))]
-    partial class KinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240113184403_AddEntities1")]
+    partial class AddEntities1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace Kino.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ActorMovie", b =>
-                {
-                    b.Property<long>("ActorsActorId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("MoviesMovieId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ActorsActorId", "MoviesMovieId");
-
-                    b.HasIndex("MoviesMovieId");
-
-                    b.ToTable("ActorMovie");
-                });
 
             modelBuilder.Entity("Kino.Domain.Actor.Actor", b =>
                 {
@@ -53,7 +40,12 @@ namespace Kino.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("MovieId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("ActorId");
+
+                    b.HasIndex("MovieId");
 
                     b.ToTable("Actors");
                 });
@@ -303,19 +295,11 @@ namespace Kino.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ActorMovie", b =>
+            modelBuilder.Entity("Kino.Domain.Actor.Actor", b =>
                 {
-                    b.HasOne("Kino.Domain.Actor.Actor", null)
-                        .WithMany()
-                        .HasForeignKey("ActorsActorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Kino.Domain.Movie.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesMovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Actors")
+                        .HasForeignKey("MovieId");
                 });
 
             modelBuilder.Entity("Kino.Domain.Movie.Movie", b =>
@@ -485,6 +469,11 @@ namespace Kino.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Kino.Domain.Movie.Movie", b =>
+                {
+                    b.Navigation("Actors");
                 });
 #pragma warning restore 612, 618
         }

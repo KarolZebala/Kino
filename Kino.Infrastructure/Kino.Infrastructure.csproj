@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Kino.Domain\Kino.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

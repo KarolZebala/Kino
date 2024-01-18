@@ -4,6 +4,7 @@ using Kino.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kino.Infrastructure.Migrations
 {
     [DbContext(typeof(KinoDbContext))]
-    partial class KinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240113191303_UpdateActorMovieRelation")]
+    partial class UpdateActorMovieRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
