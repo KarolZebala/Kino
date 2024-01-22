@@ -1,5 +1,6 @@
 ﻿using Kino.Application.Services.Movie;
 using Kino.Application.Services.ViewModels;
+using Kino.Presentation.WebApi.RequestModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,13 +44,13 @@ namespace Kino.Presentation.WebApi.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("movies")]
-        public async Task<IActionResult> GetMovies(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetMovies([FromQuery]MovieListRequestModel request, CancellationToken cancellationToken)
         {
             try
             {
-                var res = await _movieService.GetMovies(cancellationToken);
+                var res = await _movieService.GetMovies(request, cancellationToken);
                 return Ok(res);
             }
             catch (Exception e)
@@ -70,5 +71,7 @@ namespace Kino.Presentation.WebApi.Controllers
                 return BadRequest();
             }
         }
+
+        
     }
 }

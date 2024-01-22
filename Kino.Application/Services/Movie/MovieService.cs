@@ -3,6 +3,7 @@ using Kino.Domain.Actor.Interfaces;
 using Kino.Domain.Director.Interfaces;
 using Kino.Domain.Movie;
 using Kino.Domain.Movie.Interfaces;
+using Kino.Presentation.WebApi.RequestModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,30 @@ namespace Kino.Application.Services.Movie
             _directorRepository = directorRepository;
             _actorRepository = actorRepository;
         }
+
+        public async Task AddMovieComment(MovieCommentViewModel model, CancellationToken cancellationToken)
+        {
+            var movie = await _movieRepository.GetByIdAsync(model.MovieId, cancellationToken);
+            if (movie is null)
+            {
+                throw new ArgumentException($"Not found movie with id: {model.MovieId}");
+            }
+            movie.AddComment(model.Author, model.Content);
+            await _movieRepository.CommitAsync(cancellationToken);
+        }
+
+        public async Task AddMovieReview(MovieReviewViewModel model, CancellationToken cancellationToken)
+        {
+            var movie = await _movieRepository.GetByIdAsync(model.MovieId, cancellationToken);
+            if(movie is null)
+            {
+                throw new ArgumentException($"Not found movie with id: {model.MovieId}");
+            }
+            movie.AddMovieReview(model.Author, model.Type, model.Content);
+            await _movieRepository.CommitAsync(cancellationToken);
+
+        }
+
         public async Task<long> CrateMovieAsync(MovieViewModel model, CancellationToken cancellationToken)
         {
             var movie = Domain.Movie.Movie.CreateNew(model.Title, model.Description);
@@ -70,9 +95,18 @@ namespace Kino.Application.Services.Movie
             return movie.MovieId;
         }
 
-        public async Task<IEnumerable<Domain.Movie.Movie>> GetMovies(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Domain.Movie.Movie>> GetMovies(MovieListRequestModel request, CancellationToken cancellationToken)
         {
             var res = await _movieRepository.GetMoviesAsync(cancellationToken);
+            if (!string.IsNullOrWhiteSpace(request.SearchString)) 
+            {
+                res = res.Where(x => x.MovieTitle.Contains(request.SearchString)
+                || x.Descripition.Contains(request.SearchString)
+                || x.Director.DirectorName.Contains(request.SearchString)
+                || x.Director.DirectorSurname.Contains(request.SearchString)
+                );
+            }
+            res = res.Skip(request.PageIndex.Value).Take(request.PageSize.Value);
             return res;
         }
 

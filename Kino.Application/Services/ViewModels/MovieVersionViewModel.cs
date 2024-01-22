@@ -10,9 +10,9 @@ namespace Kino.Application.Services.ViewModels
     {
         public long MovieVersionId { get; set; }
         public int Duration { get; set; }
-        public string SoundVersion { get; set; }
-        public string ImageVersion { get; set; }
-        public string LanguageVerion { get; set; }
+        public string? SoundVersion { get; set; }
+        public string? ImageVersion { get; set; }
+        public string? LanguageVerion { get; set; }
         public bool HasSubstitles { get; set; }
     }
 }

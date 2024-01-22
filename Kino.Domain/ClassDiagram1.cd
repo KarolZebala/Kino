@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Kino.Domain.Actor.Actor" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAQEAAAAAAAAgAAAAAAYAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Actor\Actor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kino.Domain.Director.Director" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAQgAEAAAAAAEAAAA=</HashCode>
+      <FileName>Director\Director.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kino.Domain.Movie.Movie" Collapsed="true">
+    <Position X="5.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAEABFIIBAAAgAAAAAAQQoBAAQAAQCgCEAAEAEAAECA=</HashCode>
+      <FileName>Movie\Movie.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kino.Domain.Movie.MovieComment" Collapsed="true">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAgAAAAgAEAQAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Movie\MovieComment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kino.Domain.Movie.MovieReview" Collapsed="true">
+    <Position X="8" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAgAAAAgAAAQAAQCAAAQAAAAAAAAA=</HashCode>
+      <FileName>Movie\MovieReview.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kino.Domain.Movie.MovieVersion" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACQAAAAAgAAgAAAQAAQAAAAACIAAACAAA=</HashCode>
+      <FileName>Movie\MovieVersion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
