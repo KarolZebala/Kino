@@ -46,7 +46,7 @@ namespace Kino.Application.Services.Movie
             {
                 throw new ArgumentException($"Not found movie with id: {model.MovieId}");
             }
-            movie.AddMovieReview(model.Author, model.Type, model.Content);
+            movie.AddMovieReview(model.Author, model.Type, model.Content, model.Grade);
             await _movieRepository.CommitAsync(cancellationToken);
 
         }
@@ -81,7 +81,8 @@ namespace Kino.Application.Services.Movie
                 movie.AddMovieReview(
                     author: reviews.Author,
                     type: reviews.Type,
-                    content: reviews.Content
+                    content: reviews.Content,
+                    grade: reviews.Grade
                 );
             }
 
@@ -119,6 +120,7 @@ namespace Kino.Application.Services.Movie
         public async Task<long> UpdateMovieAsync(MovieViewModel model, CancellationToken cancellationToken)
         {
             var movie = await _movieRepository.GetByIdAsync(model.MovieId, cancellationToken);
+            movie.ChangeMainAttributes(model.Title, model.Description);
             var director = await _directorRepository.GetByIdAsync(model.DirectorId, cancellationToken);
 
             movie.AddDirector(director);
@@ -169,7 +171,8 @@ namespace Kino.Application.Services.Movie
                 movie.AddMovieReview(
                     author: reviews.Author,
                     type: reviews.Type,
-                    content: reviews.Content
+                    content: reviews.Content,
+                    grade: reviews.Grade
                 );
             }
             foreach (var reviews in model.ReviewsToUpdate)

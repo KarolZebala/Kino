@@ -13,5 +13,6 @@ namespace Kino.Application.Services.ViewModels
         public string? Author { get; set; }
         public string? Type { get; set; }
         public string? Content { get; set; }
+        public int Grade { get;  set; }
     }
 }

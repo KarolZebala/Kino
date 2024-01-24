@@ -74,10 +74,11 @@ namespace Kino.Domain.Movie
         public void AddMovieReview(
             string author,
             string type,
-            string content
+            string content,
+            int grade
         )
         {
-            var review = MovieReview.CreateNew(author, type, content);
+            var review = MovieReview.CreateNew(author, type, content, grade);
             _reviews.Add(review);
         }
         public void UpdateMovieReview(long movieReviewId, string content)
