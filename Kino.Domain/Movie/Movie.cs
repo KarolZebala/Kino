@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-
-namespace Kino.Domain.Movie
+﻿namespace Kino.Domain.Movie
 {
     public class Movie
     {

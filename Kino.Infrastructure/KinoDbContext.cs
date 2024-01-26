@@ -1,6 +1,7 @@
 ﻿using Kino.Domain.Actor;
 using Kino.Domain.Director;
 using Kino.Domain.Movie;
+using Kino.Domain.MovieItem;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace Kino.Infrastructure
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Director> Directros { get; set; }
         public DbSet<Actor> Actors { get; set; }
+        public DbSet<MovieItem> MovieItems { get; set; } 
         public KinoDbContext(DbContextOptions<KinoDbContext> options) : base(options)
         {
 

@@ -30,7 +30,7 @@ namespace Kino.Application.Services.Movie
 
         public async Task AddMovieComment(MovieCommentViewModel model, CancellationToken cancellationToken)
         {
-            var movie = await _movieRepository.GetByIdAsync(model.MovieId, cancellationToken);
+            var movie = await _movieRepository.GetMovieByIdAsync(model.MovieId, cancellationToken);
             if (movie is null)
             {
                 throw new ArgumentException($"Not found movie with id: {model.MovieId}");
@@ -41,7 +41,7 @@ namespace Kino.Application.Services.Movie
 
         public async Task AddMovieReview(MovieReviewViewModel model, CancellationToken cancellationToken)
         {
-            var movie = await _movieRepository.GetByIdAsync(model.MovieId, cancellationToken);
+            var movie = await _movieRepository.GetMovieByIdAsync(model.MovieId, cancellationToken);
             if(movie is null)
             {
                 throw new ArgumentException($"Not found movie with id: {model.MovieId}");
@@ -119,7 +119,7 @@ namespace Kino.Application.Services.Movie
 
         public async Task<long> UpdateMovieAsync(MovieViewModel model, CancellationToken cancellationToken)
         {
-            var movie = await _movieRepository.GetByIdAsync(model.MovieId, cancellationToken);
+            var movie = await _movieRepository.GetMovieByIdAsync(model.MovieId, cancellationToken);
             movie.ChangeMainAttributes(model.Title, model.Description);
             var director = await _directorRepository.GetByIdAsync(model.DirectorId, cancellationToken);
 

@@ -30,7 +30,7 @@ namespace Kino.Infrastructure.Repositories
             return res;
         }
 
-        public async Task<Movie> GetByIdAsync(long movieId, CancellationToken cancellationToken)
+        public async Task<Movie> GetMovieByIdAsync(long movieId, CancellationToken cancellationToken)
         {
             var res = await _context.Movies
                 .Include(x => x.Director)

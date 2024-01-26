@@ -1,6 +1,7 @@
 ﻿using Kino.Domain.Actor.Interfaces;
 using Kino.Domain.Director.Interfaces;
 using Kino.Domain.Movie.Interfaces;
+using Kino.Domain.MovieItem.Interfaces;
 using Kino.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -19,6 +20,7 @@ namespace Kino.Infrastructure
             services.AddScoped<IDirectorRepository, DirectorRepository>();
             services.AddScoped<IActorRepository, ActorRepository>();
             services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IMovieItemRepository, MovieItemRepository>();
             return services;
         }
     }

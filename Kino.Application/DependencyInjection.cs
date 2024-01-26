@@ -1,6 +1,7 @@
 ﻿using Kino.Application.Services.Actor;
 using Kino.Application.Services.Director;
 using Kino.Application.Services.Movie;
+using Kino.Application.Services.MovieItem;
 using Kino.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -19,6 +20,7 @@ namespace Kino.Application
             services.AddScoped<IActorService, ActorService>();
             services.AddScoped<IDirectorService, DirectorService>();
             services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IMovieItemService, MovieItemService>();
 
             services.AddInfrastructureLayer();
             return services;
