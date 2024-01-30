@@ -31,7 +31,10 @@ namespace Kino.Infrastructure.Repositories
 
         public async Task<IEnumerable<MovieItem>> GetAllMovieItemsAsync(CancellationToken cancellationToken)
         {
-            var res = await _context.MovieItems.ToListAsync();
+            var res = await _context.MovieItems
+                .AsNoTracking()
+                .Include(x => x.Movie)
+                .ToListAsync();
             return res.AsEnumerable();
         }
 
@@ -39,13 +42,16 @@ namespace Kino.Infrastructure.Repositories
         {
             var res = _context.MovieItems
                 .AsNoTracking()
+                .Include(x => x.Movie)
                 .FirstOrDefaultAsync(x => x.MovieItemId == movieItemID);
             return res;
         }
 
         public Task<MovieItem> GetMovieItemByIdAsync(long movieItemId, CancellationToken cancellationToken)
         {
-            var res = _context.MovieItems.FirstOrDefaultAsync(x => x.MovieItemId == movieItemId);
+            var res = _context.MovieItems
+                .Include(x => x.Movie)
+                .FirstOrDefaultAsync(x => x.MovieItemId == movieItemId);
             return res;
         }
     }

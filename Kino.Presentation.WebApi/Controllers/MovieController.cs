@@ -3,9 +3,11 @@ using Kino.Application.Services.ViewModels;
 using Kino.Presentation.WebApi.RequestModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Kino.Presentation.WebApi.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
     [Route("[controller]")]
     public class MovieController : ControllerBase
@@ -23,7 +25,7 @@ namespace Kino.Presentation.WebApi.Controllers
             try
             {
                 var res = await _movieService.CrateMovieAsync(model, cancellationToken);
-                return Ok($"Created with id: {res}");
+                return Ok(res);
             }
             catch (Exception e)
             {
@@ -44,18 +46,22 @@ namespace Kino.Presentation.WebApi.Controllers
                 return BadRequest(e.Message);
             }
         }
-        //[Authorize(AuthenticationSchemes = "Bearer")]
+        
         [HttpGet("movies")]
         public async Task<IActionResult> GetMovies([FromQuery]MovieListRequestModel request, CancellationToken cancellationToken)
         {
             try
             {
                 var res = await _movieService.GetMovies(request, cancellationToken);
+                //var serialize = JsonConvert.SerializeObject(res, new JsonSerializerSettings
+                //{
+                //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                //});
                 return Ok(res);
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e);
             }
         }
         [HttpPut("update")]

@@ -31,7 +31,7 @@ namespace Kino.Presentation.WebApi.Controllers
             }
         }
         [HttpGet("movieItems")]
-        public async Task<IActionResult> GetMovieItems(MovieItemListRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetMovieItems([FromQuery] MovieItemListRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Kino.Presentation.WebApi.Controllers
             }
         }
         [HttpGet("movieItem/{movieItemid}")]
-        public async Task<IActionResult> GetMovieItem([FromRoute]long movieItemid, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetMovieItem(long movieItemid, CancellationToken cancellationToken)
         {
             try
             {
