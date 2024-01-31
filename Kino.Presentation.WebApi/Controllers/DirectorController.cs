@@ -1,4 +1,5 @@
 ﻿using Kino.Application.Services.Director;
+using Kino.Application.Services.RequestModels;
 using Kino.Application.Services.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,11 +47,11 @@ namespace Kino.Presentation.WebApi.Controllers
             }
         }
         [HttpGet("directors")]
-        public async Task<IActionResult> GetDirectors(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetDirectors([FromQuery]DirectorListRequestModel request, CancellationToken cancellationToken)
         {
             try
             {
-                var res = await _directorService.GetDirectorsAsync(cancellationToken);
+                var res = await _directorService.GetDirectorsAsync(request, cancellationToken);
                 return Ok(res);
             }
             catch (Exception e)

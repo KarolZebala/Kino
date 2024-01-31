@@ -7,6 +7,6 @@ namespace Kino.Application.Services.Director
         Task<long> CreateAsync(DirectorViewModel modle, CancellationToken cancellationToken);
         Task<long> UpdateAsync(DirectorViewModel modle, CancellationToken cancellationToken);
         Task<Domain.Director.Director> GetByIdAsync(long directorId, CancellationToken cancellationToken);
-        Task<IEnumerable<Domain.Director.Director>> GetDirectorsAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<Domain.Director.Director>> GetDirectorsAsync(RequestModels.DirectorListRequestModel request, CancellationToken cancellationToken);
     }
 }

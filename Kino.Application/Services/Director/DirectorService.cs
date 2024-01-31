@@ -1,4 +1,5 @@
-﻿using Kino.Application.Services.ViewModels;
+﻿using Kino.Application.Services.RequestModels;
+using Kino.Application.Services.ViewModels;
 using Kino.Domain.Director.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,17 @@ namespace Kino.Application.Services.Director
             return director;
         }
 
-        public async Task<IEnumerable<Domain.Director.Director>> GetDirectorsAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Domain.Director.Director>> GetDirectorsAsync(DirectorListRequestModel request, CancellationToken cancellationToken)
         {
             var directors = await _directorRepository.GetDirectorsAsync(cancellationToken);
+            if (!string.IsNullOrWhiteSpace(request.SearchString))
+            {
+                directors = directors.Where(x =>
+                    x.DirectorName.Contains(request.SearchString)
+                 || x.DirectorSurname.Contains(request.SearchString)
+                );
+            }
+            directors = directors.Skip(request.PageSize.Value * request.PageIndex.Value).Take(request.PageSize.Value);
             return directors;
         }
 

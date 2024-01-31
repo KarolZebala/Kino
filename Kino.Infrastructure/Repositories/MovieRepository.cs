@@ -50,11 +50,12 @@ namespace Kino.Infrastructure.Repositories
         public async Task<IEnumerable<Movie>> GetMoviesAsync(CancellationToken cancellationToken)
         {
             var res = await _context.Movies
+                .AsNoTracking()
                 .Include(x => x.Director)
                 .Include(x => x.Reviews)
                 .Include(x => x.MovieVersions)
                 .Include(x => x.MovieComents)
-                .AsNoTracking()
+                //.Include(x => x.Actors)
                 .ToListAsync(cancellationToken);
             return res.AsEnumerable();
         }
